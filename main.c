@@ -13,9 +13,9 @@ int main(void) {
     printf("\n");
 
     int a = 0, b = 1;
-    int c = 1, d = 1;
+    int c = 1, d = 0;
     while (b + c <= maxDen) {
-        const double mediant = (double)(a + c) / (b + d);
+        const double mediant = (double) (a + c) / (b + d);
         if (mediant <= target) {
             a += c;
             b += d;
@@ -26,16 +26,16 @@ int main(void) {
             d += b;
         }
     }
-    const double firstDiff = target - (double)a / b;
-    const double secondDiff = (double)c / b - target;
+    const double firstDiff = target - (double) a / b;
+    const double secondDiff = (double) c / d - target;
     if (secondDiff < firstDiff || secondDiff == firstDiff && d < b) {
         a = c;
         b = d;
     }
 
     printf("Closest fraction is %d/%d\n", a, b);
-    printf("Fraction value is %lf\n", (double)a / b);
-    printf("Error = %e\n", fabs(target - (double)a / b));
+    printf("Fraction value is %lf\n", (double) a / b);
+    printf("Error = %e\n", fabs(target - (double) a / b));
     fflush(stdout);
 
     return 0;
