@@ -12,6 +12,9 @@
 // see below for definition -- write your code there
 int wordInfo(const char * filename, char shortest[], char longest[], char lowest[], char highest[]);
 
+// declaration -- don't write code here
+void removePunct(char * string);
+
 int main() {
    char filename[25];
    char shortWord[16] = "";
@@ -47,6 +50,44 @@ int wordInfo(const char* filename, char *shortest, char *longest, char *lowest, 
    // Task 3: find the longest and shortest words
    // Task 4: find the first and last words in alphabetical order
 
-   return 0;
+   FILE* file = fopen(filename, "r");
+   if (file == NULL) return -1;
+
+   char word[16];
+   int wordCount = 0, longestLength, shortestLength;
+   while (fscanf(file, "%s", word) != EOF) {
+      wordCount++;
+      removePunct(word);
+      if (wordCount == 1) {
+         strcpy(shortest, word);
+         strcpy(longest, word);
+         longestLength = shortestLength = strlen(word);
+         strcpy(lowest, word);
+         strcpy(highest, word);
+         continue;
+      }
+
+      int wordLength = strlen(word);
+      if (wordLength < shortestLength) {
+         shortestLength = wordLength;
+         strcpy(shortest, word);
+      }
+      else if (wordLength > longestLength) {
+         longestLength = wordLength;
+         strcpy(longest, word);
+      }
+
+      if (strcmp(word, lowest) < 0) strcpy(lowest, word);
+      else if (strcmp(word, highest) > 0) strcpy(highest, word);
+   }
+
+   fclose(file);
+   return wordCount;
 }
 
+
+// definition -- write your code here
+void removePunct(char * string) {
+
+   for (char* ptr = string + strlen(string) - 1; ptr >= string && ispunct(*ptr); *ptr-- = 0);
+}
