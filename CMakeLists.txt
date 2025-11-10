@@ -3,4 +3,6 @@ project(ece209 C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_executable(ece209 main.c)
+add_executable(ece209 main.c
+        wordle.c
+        random.c)
